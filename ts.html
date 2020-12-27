@@ -1,0 +1,161 @@
+<html>
+
+<head>
+	<script src="js/jquery-1.11.0.js"></script>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
+	<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+	<script src="js/bolnice.js"></script>
+	<script src="js/app.js"></script>
+	<style>
+		.red {
+			background-color: red
+		}
+
+		.green {
+			background-color: green
+		}
+
+		.affix {
+			top: 0;
+			width: 100%;
+		}
+
+		.affix+.container-fluid {
+			padding-top: 70px;
+		}
+
+		li {
+			list-style: none;
+		}
+
+		ul {
+			padding: 0;
+		}
+
+	</style>
+</head>
+<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197">
+
+	<div class="navbar-header">
+		<a class="navbar-brand" href="#">Test</a>
+
+		<ul class="nav navbar-nav">
+			<li><a href="index.html">Forma</a></li>
+			<li class="active"><a href="#">TypeScript</a></li>
+		</ul>
+</nav>
+
+<body>
+	<div class="container-fluid">
+		<div class="col-md-4 col-md-offset-4">
+			<div class="form-group">
+				<label for="instruktor">Bolnica:</label>
+				<select type="text" id="bolnica" class="form-control" onchange="promeniAktivnu(this)">
+				</select>
+			</div>
+		</div>
+		<div class="col-md-4 col-md-offset-4">
+			<br/>
+			<div class="form-group">
+				<label for="ime">Ime Pacijenta:</label>
+				<input type="text" id="ime" class="form-control"></input>
+			</div>
+			<div class="form-group">
+				<label for="prezime">Prezime Pacijenta:</label>
+				<input type="text" id="prezime" class="form-control"></input>
+			</div>
+			<div class="form-group">
+				<label for="temperatura">Telesna Temperatura Pacijenta:</label>
+				<input type="number" id="temperatura" class="form-control"></input>
+			</div>
+			<div class="form-group">
+				<label for="test">PCR Test:</label>
+				<select type="text" id="test" class="form-control">
+					<option value="Nije radio">Nije radio</option>
+					<option value="Pozitivan">Pozitivan</option>
+					<option value="Negativan">Negativan</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<input type="button" id="dodajPacijenta" value="Dodaj pacijenta"
+					class="btn btn-default col-md-3 pull-left" />
+			</div>
+		</div>
+		
+		<div class="col-md-4 col-md-offset-4">
+			<br />
+			<hr />
+			<div class="row">
+				<div class="form-group">
+					<label for="ids">ID Pacijenta (za unos simptoma):</label>
+					<input type="text" id="ids" class="form-control"></input>
+				</div>
+				<div class="form-group">
+
+					<label for="simptom">Simptom:</label>
+					<select type="text" id="simptom" class="form-control">
+						<option value="kasalj">Kasalj</option>
+						<option value="anosmia">Anosmia</option>
+						<option value="ageusia">Ageusia</option>
+						<option value="umor">Umor</option>
+						<option value="glavobolja">Glavobolja</option>
+						<option value="bol u grlu">Bol u grlu</option>
+						<option value="osip">Osip</option>
+						<option value="dijarea">Dijarea</option>
+						<option value="gusenje">Gusenje</option>
+					</select> <br />
+					<input type="button" id="dodajSimptom" value="Dodaj simptom"
+						class="btn btn-default col-md-3 pull-left" />
+				</div>
+			</div>
+			<hr />
+			<br />
+			
+			<div class="row">
+				<div class="col-md-4">
+					<input type="button" id="procenat"
+						value="Procentualno obolelih" class="btn btn-default" />
+				</div>
+
+				<div class="col-md-4">
+					<input type="button" id="bezSimptoma"
+						value="Procentualno obolelih koji nemaju simptome" class="btn btn-default" />
+				</div>
+
+
+
+			</div>
+
+			<br />
+			<br />
+			<h3>Spisak pacijenata:</h3>
+			<div id="ispiti" class="row">
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Ime</th>
+								<th>Prezime</th>
+								<th>Temperatura</th>
+								<th>PCR Test</th>
+								<th>Simptomi</th>
+							</tr>
+						</thead>
+						<tbody id="tbody">
+						</tbody>
+					</table>
+				</div>
+				<br />
+				<br />
+				<br />
+				<div class="row" id="podaci">
+
+				</div>
+			</div>
+		</div>
+</body>
+
+
+</html>

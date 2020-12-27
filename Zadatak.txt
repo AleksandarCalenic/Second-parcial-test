@@ -1,0 +1,157 @@
+FED Kurs: Parcijalni test
+----------------------------------------------------------------------------------------------------------------------
+ZADATAK:
+	index.html: (Kod pisati u fajlu skripta.js: ./js/skripta.js)
+		--------------
+			Izvršiti implementaciju zadatka koji se odnosi na registrovanje zdravstvenih ustanova
+			u informacionom sistemu.
+			Izvršiti validaciju forme upotrebom JavaScript tehnologije.	
+			Sva polja u formi moraju biti unesena kako bi se forma submitovala,
+			pocetno slovo naziva zdravstvene ustanove i grada mora biti veliko.
+			
+			Na formi se nalazi jedan checkbox, i dva selecta. Inicijalno je "Tip ustanove" select onemogucen (disabled). Klikom na checkbox "Prioritet" omoguciti pomenuti select.
+			Takodje, ukoliko se checkbox "Prioritet" klikne opet, onemoguciti select.
+			
+			Pored selecta "Tip ustanove", postoji jos jedan select sa id-em sel2 i inicijalno je sakriven i onemogucen (disabled). 
+			Ukoliko korisnik odabere opciju "tercijarna" u prvom selectu, potrebno je prikazati drugi select (promeniti njegov visibility) i aktivirati (da nije vise disabled). 
+			Ukoliko se odabere neka druga opcija (primarna ili sekundarna) ili se iskljuci Prioritet checkbox sel2 je opet potrebno sakriti i deaktivirati (disabled).
+
+			Napomena: klasa za sel2, se takodje naziva sel2.			
+
+			Sel2 ima dve vrednosti, klinika i institut, opcije koje su dostupne samo za tercijarne ustanove. 
+			Prilikom menjanja opcija selecta, paragraf select_paragraf koji inicijalno ima vrednost:
+			"Odabrali ste : "
+			dopuniti sa podacima odabrane ustanove.
+
+			Tako da ako je odabrana klinika, u pomenutom paragrafu trebao bi da bude ispis:
+			"Odabrali ste : klinika" i obojiti select_paragraf, kao i pozadinu submit dugmeta sa odgovarajućom vrednosti iz objekta boje. 
+
+ 			
+			ili ako je odabrano institut, u istom paragrafu treba da pise:
+
+			"Odabrali ste : institut" i obojiti select_paragraf, kao i pozadinu submit dugmeta sa odgovarajućom vrednosti iz objekta boje. 
+			
+			Objekat koji sadrzi vrednosti boja definisan je na sledeci nacin i njega treba da iskoristite:
+
+			var boje = {
+				klinika: "Crimson",
+				institut: "Teal"
+			};
+
+			
+			Forma se ne moze submitovati ukoliko polja nisu popunjena.
+
+			Napredno
+			---------------------
+			Onemogućiti submit forme ako uneto naziv i grad se ne poklapaju sa jednim od predfinisanih,
+			koji su dati na nacin kao sto je prikazano ispod:
+			var validacija = [{naziv: "KCV", grad: "NS"}, {naziv: "KCS", grad: "BG"}, {naziv: "KCN", grad: "NI"}];
+
+	
+ts.html (Kod pisati u fajlove app.ts Bolnica.ts Pacijent.ts)
+		--------------
+			Osnovno
+			---------------------
+
+			NAPOMENA: Pre pocetka rada, u ts.html izbrisati sledeci script tag: <script src="js/kriptovano.js"></script>
+
+			Data je klasa Simptom.
+			Implementirati klasu Pacijent (fajl Pacijent.ts), koja se sastoji od:
+				-atributa:
+					private _id: number;
+    				private _ime: string;
+    				private _prezime: string;
+    				private _telesnaTemperatura: number;
+    				private _pcrTest: string;
+    				private _ostaliSimptomi: Simptom[]; 
+				-konstruktora (prima sve osim parametra za _ostaliSimptomi, koji treba da se inicijalizuje na parazan niz)
+				-get metode (geteri) za sva polja
+				-set metode (seteri) za sva polja
+				-metoda:
+					dodajSimptom - (metoda kao parametar prima simptom i dodaje ga u niz _ostaliSimptomi)
+
+			Implementirati klasu Bolnica (fajl Bolnica.ts), koja se sastoji od:
+				-atributa:
+					private _naziv: string;
+    				private _grad: string;
+    				private _pacijenti: Pacijent[];
+				-konstruktora (prima sve osim parametra za _pacijenti, koji treba da se inicijalizuje na parazan niz)
+				-get metode (geteri) za sva polja
+				-set metode (seteri) za sva polja
+				-metode:
+					refreshHTML(): void  
+						ispisuje pacijente u okviru tbody elementa (id=tbody)  tabele na nacin prikazan ispod opisa klase
+					dodajPacijenta(value: Pacijent): void 
+						dodaje pacijenta u niz _pacijenti i poziva metodu refreshHTML
+					procentualnoObolelih(): number 
+						(*Iskoristiti filter u delu implementacije) racuna i vraca procenat obolelih pacijenta po formuli (broj_obolelih / ukupno_pacijenta ) * 100
+
+				---------------------------- refreshHTML ----------------------------------
+				Ispisana tabela treba da budu u sledecem fomatu: 
+				<table class="table">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Ime</th>
+								<th>Prezime</th>
+								<th>Temperatura</th>
+								<th>PCR Test</th>
+								<th>Simptomi</th>
+							</tr>
+						</thead>
+						<tbody id="tbody">
+							<tr> <!-- svaki red tabele predstavlja pacijenta -->
+								<td>1</td> <!-- ispisuj se svi atributi pazijenta kao celije tabele -->
+								<td>Pera</td>
+								<td>Peric</td>
+								<td>36.4 °C</td>
+								<td>Pozitivan</td>
+								<td> <!-- ispis simptoma se vrsi isto u okviru jedne celije -->
+									<ul> <!-- samo sto je spisak simtoma dat kao neuredjena lista -->
+									</ul> <!-- svaki simptom je zapravo list item videti ispod -->
+								</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Mika</td>
+								<td>Mikic</td>
+								<td>37.2 °C</td>
+								<td>Negativan</td>
+								<td>
+									<ul>
+										<li>kasalj</li>
+										<li>bol u grlu</li>
+										<li>glavobolja</li>
+									</ul>
+								</td>
+							</tr>
+							.
+							.
+							.
+
+			----------------------------END of refreshHTML ----------------------------------
+
+
+			U fajlu app.ts u okviru funkcije wireEvents() implementirati klikove na dugmice:
+
+				-"Dodaj pacijenta" (id dodajPacijenta) 
+					Pokupiti podatke iz odgovarajucih imput i selekt polja, napraviti novi objekat pacijenta i dodati ga u aktivnu bolnicu
+					Ne postoji polje za rucni unos ID-a pacijenta, atribut ID prilikom pravljenja objekta pacijenta postavitie kao duzinu niza pacijenta aktivne bolnice uvecan za jedan.
+
+				-"Procentualno obolelih" (id procenat)
+					U div sa IDem "podaci" upisati procentualan broj obolelih u aktivnoj bolnici za procenat koristi metodu procentualnoObolelih() (po zelji pozvati metodu toFixed(0))
+					HTML sadrzaj diva treba da bude u obliku: 
+					`<h2>Procenutalan broj obolelih u bolnici ${naziv aktivne bolnice} je ${procenutalno oblelih aktivne bolnice}%<h2>`
+
+				-"Procentualno obolelih koji nemaju simptome" (id bezSimptoma)
+					U div sa IDem "podaci" upisati procentualan broj obolelih (u svim bolnicama) koji nemaju simptome u odnosu na sve pozitivne pacijente (pozitivni pacijenti imaju pcrTest sa vrednoscu "Pozitivan")
+					Pozeljno je koristi filter u jednom delu implementacije.
+
+					HINT: 
+						Akumulirati ukupan broj pozitivnih pacijenata i pozitivnih pacijenata bez simptoma za svaku bolnicu i izracunati procenat po formuli: (ukupan_broj_pozitivnih_bez_simptoma / ukupan_broj_pozitivnih) * 100
+
+						Ispis u divu treba da bude u obliku:
+							`<h2>Procenutalan broj obolelih koji nemaju simptome je: izracuanataProcentualanVrednost %</h2>`
+
+				
+			
